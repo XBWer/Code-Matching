@@ -1,0 +1,18 @@
+public boolean insert(Titles t){
+Connection conn = null;
+PreparedStatement pstmt=null;
+boolean b = false;
+try {
+conn = DbConn.getConn();
+pstmt = conn.prepareStatement(¡°insert into titles(title_id,title) values (?,?)¡±);
+pstmt.setString(1,t.getTitleid());
+pstmt.setString(2,t.getTitle());
+int n = pstmt.executeUpdate();
+if(n==1)
+b=true;
+
+} catch (SQLException e) {
+e.printStackTrace();
+}
+return b;
+}

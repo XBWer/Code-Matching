@@ -1,0 +1,17 @@
+public boolean delete(String titleid){
+Connection conn = null;
+PreparedStatement pstmt=null;
+boolean b = false;
+try {
+conn = DbConn.getConn();
+pstmt = conn.prepareStatement(¡°delete from titles where title_id=?¡±);
+pstmt.setString(1,titleid);
+int n = pstmt.executeUpdate();
+if(n==1)
+b=true;
+
+} catch (SQLException e) {
+e.printStackTrace();
+}
+return b;
+}

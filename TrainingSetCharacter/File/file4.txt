@@ -1,0 +1,19 @@
+public class ReadTest {
+    public static void main(String[] args) throws Exception {
+        File f=new File("d:\\xxx.xrdml");
+        BufferedReader br=new BufferedReader(new InputStreamReader(new FileInputStream(f)));
+        BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(f.getParent()+f.getName().replace(".","_2."))));
+        String tmp=new String();
+        while((tmp=br.readLine())!=null){
+            if(tmp.contains("<startPosition>") || tmp.contains("</startPosition>")){
+                double num=Double.parseDouble(tmp.substring(tmp.indexOf("<startPosition>")+"<startPosition>".length(),tmp.indexOf("</startPosition>")));
+                num=num/2;
+                tmp=tmp.substring(0,tmp.indexOf("<startPosition>")+"<startPosition>".length())+num+tmp.substring(tmp.indexOf("</startPosition>"));
+            }
+            bw.write(tmp);
+            bw.newLine();
+        }
+        br.close();
+        bw.close();
+    }
+}

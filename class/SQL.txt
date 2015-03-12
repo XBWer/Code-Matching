@@ -1,0 +1,3 @@
+preparedstatement getconn preparestatement executeupdate sqlexception
+preparedstatement getconn preparestatement where sqlexception
+from sqlexception

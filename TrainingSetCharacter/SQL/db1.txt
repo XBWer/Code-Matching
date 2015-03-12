@@ -1,0 +1,20 @@
+public ArrayList select() {
+Connection conn = null;
+PreparedStatement pstmt = null;
+ResultSet rs = null;
+ArrayList al = new ArrayList();
+try {
+conn = DbConn.getConn();
+pstmt = conn.prepareStatement(“select * from titles”);
+rs = pstmt.executeQuery();
+while (rs.next()) {
+Titles t = new Titles();
+t.setTitleid(rs.getString(1));
+t.setTitle(rs.getString(2));
+al.add(t);
+}
+} catch (SQLException e) {
+// TODO 自动生成 catch 块
+e.printStackTrace();
+} 
+}

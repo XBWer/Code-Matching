@@ -1,0 +1,72 @@
+public class Test {
+
+    // 开始字符串
+    private final static String START_STRING = "<startPosition>";
+    
+    // 结束字符串
+    private final static String END_STRING = "</startPosition>";
+    
+    public static void main(String[] args) {
+
+        File oldFile = new File("d:\\xxx.xrdml");
+        BufferedReader br = null;
+        BufferedWriter bw = null;
+        try {
+            
+            // 获得原文件的输入流
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(oldFile)));
+            
+            // 获得新文件的输出流
+            bw =new BufferedWriter(new OutputStreamWriter(new FileOutputStream(oldFile.getParent()
+                            + oldFile.getName().replace(".", "_2."))));
+            
+            // 读取一行记录
+            String line = null;
+            while ((line = br.readLine()) != null) {
+                
+                // 判断当前行是否包含<startPosition>与</startPosition>
+                if (line.contains(START_STRING) && line.contains(END_STRING)) {
+                    
+                    // 获取<startPosition>与</startPosition>中间的字符串
+                    String strNum = line.substring(line.indexOf(START_STRING) + START_STRING.length(), 
+                                                   line.indexOf(END_STRING));
+                    
+                    // 转化成double类型
+                    double num = Double.parseDouble(strNum);
+                    num = num / 2;
+                    
+                    // 把原数字替换成新数字
+                    line.replace(strNum, String.valueOf(num));
+                }  
+                
+                // 写入新文件一行数据
+                bw.write(line);
+                
+                // 写入新文件换行符
+                bw.newLine();
+            }
+            
+        } catch (FileNotFoundException e) {
+            System.out.println("文件不存在！");
+        } catch (NumberFormatException e) {
+            System.out.println("文件中的数据错误！");
+        } catch (IOException e) {
+            System.out.println("文件读取或写入时发生错误！");
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    System.out.println("文件关闭失败");
+                }
+            }
+            if (bw != null) {
+                try {
+                    bw.close();
+                } catch (IOException e) {
+                    System.out.println("文件关闭失败");
+                }
+            }
+        }
+    }
+}

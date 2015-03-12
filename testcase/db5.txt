@@ -1,0 +1,17 @@
+public boolean update(Titles t){
+Connection conn = null;
+PreparedStatement pstmt=null;
+boolean b = false;
+try {
+conn = DbConn.getConn();
+pstmt = conn.prepareStatement(¡°update titles set title=? where title_id=?¡±);
+pstmt.setString(1,t.getTitle());
+pstmt.setString(2,t.getTitleid());
+int n = pstmt.executeUpdate();
+if(n==1)
+b=true;
+
+} catch (SQLException e) {
+e.printStackTrace();
+}
+} 
